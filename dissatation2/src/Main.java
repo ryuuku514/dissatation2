@@ -22,8 +22,19 @@ public class Main {
 			}
 
 		}
-
-	
+		double bestTau = list.get(1).getTau(); 
+		 //System.out.println(bestTau);
+		 for (int i = 1; i < list.size() - 1 ; i++) {
+			 //System.out.println(bestTau);
+		  	if (bestTau > list.get(i).getTau()  ) {
+		  		bestTau = list.get(i).getTau();
+		  		 System.out.println(bestTau);
+			} else {
+				
+			}
+		}
+		
+	//System.out.println(bestTau);
 
 	}
 }

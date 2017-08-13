@@ -17,41 +17,56 @@
 			int A = 1;
 			int B = -1;
 			int C = -1;
-			double root = (B^2) - 4*A*C;
-		 	double posQuad = -B + Math.sqrt(root)/2*A;
-			double minQaud1 = -B - Math.sqrt(root)/2*A;
-			boolean check = minQaud1<posQuad;   
-				if (check = true) {
-					System.out.println("tuple{" + a + "," +  b + ") has tau : " + posQuad+ " " + root + " " + check);
+			double root = Math.pow(B, 2) - 4*A*C;
+		 	double posQuad = (-B + Math.sqrt(root))/(2*A);
+			double minQaud1 = (-B - Math.sqrt(root))/2*A;
+			   
+				if (minQaud1 < posQuad) {
+					//System.out.println("tuple{" + a + "," +  b + ") has tau : " + posQuad+ " " + root);
 					
 				} else {
-					System.out.println("tuple{" + a + "," +  b + ") has tau : " + minQaud1 + " " + check);
+					//System.out.println("tuple{" + a + "," +  b + ") has tau : " + minQaud1 + " " + root);
 				}
 			 
+			this.tau = posQuad; 
+			
+			
+		}else if (a == b) {
+			tau = 1000000;
 			
 			
 			
-		//}else if (a < 4 && b < 4) {
 			
-	//newton-rapson
-	// x_1 = x_0 - f(x_0)/f'(x_0)
-	//f(x_0^-a + x_0^-b -1) = 0
-	//f'(a*x_0^-a-1 - b*x_0^-b-1) = ?
 			
+			
+
 		}else {
+			/*newton-rapson
+			x_1 = x_0 - f(x_0)/f'(x_0)
+			f(x_0^-a + x_0^-b -1) = 0
+			f'(a*x_0^-a-1 - b*x_0^-b-1) = ?
+			Start point.
+			|tau(a,b)|^( 1 / ( sum(tau(a,b)) / |tau(a,b)| ) )
+			*/		
+			
+			double initPower = 1 / ((a + b) / 2) ;  
+			double initValue = Math.pow(2, initPower);
+			
 			double x_0 = 0;
-			double x_1 = 1;
+			double x_1 = initValue;
 			int k = 0;
 			do {
 				x_0 = x_1;
 				double Fx = Math.pow(x_0 , -a) + Math.pow(x_0,-b) -1;
-				double Gx = -a * Math.pow(x_0 , -a-1) -b * Math.pow(x_0,-b-1);
+				double Gx = (-a * Math.pow(x_0 , -a-1)) - (b * Math.pow(x_0,-b-1));
 				x_1 = x_0 - (Fx / Gx);
 				
 				k++;
-				//System.out.println("tuple{" + a + " " + + b + ") " + k + " " + x_0 + " " + x_1);
+				//System.out.println("tuple{" + a + " " + + b + ")  has tau : " + x_1 + " " + k + " " + initValue);
 			}while(Math.abs(x_0 - x_1) > 0.0001);
-			
+			//System.out.println("tuple{" + a + " " + + b + ")  has tau : " + x_1 + " " + k);
+			this.tau = x_1;
+			//System.out.println(getTau());
 		}
 		
 	}
@@ -62,10 +77,14 @@
 	
 	public double getTau() {
 		
-		return tau;
+		return this.tau;
 	}
 	
-	
-	 
+	public double getA() {
+		return a;
+	}
+	public double getB() {
+		return b;
+	} 
 
 }
